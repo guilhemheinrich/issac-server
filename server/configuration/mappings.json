@@ -1,0 +1,32 @@
+{
+    "Processus": {
+        "attributes": ["name", "description"],
+        "relationships": {
+            "agents": {
+                "relationshipLabel": "involve",
+                "defaultRelationshipAttributes": {}
+            },
+            "owners": {
+                "relationshipLabel": "hasOwner",
+                "defaultRelationshipAttributes": {}
+            },
+            "context": {
+                "relationshipLabel": "hasContext",
+                "defaultRelationshipAttributes": {}
+            }
+        }
+    },
+    "Context": {
+        "attributes": [],
+        "relationships": {
+            "location": {
+                "relationshipLabel": "takePlace",
+                "defaultRelationshipAttributes": {}
+            },
+            "primaryPlant": {
+                "relationshipLabel": "hasPrimaryPlant",
+                "defaultRelationshipAttributes": {}
+            },
+        }
+    }
+}
