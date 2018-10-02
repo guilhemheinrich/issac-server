@@ -1,0 +1,49 @@
+{
+    "entitySpecific": {},
+    "general": {
+        "description": [
+            {
+                "database": "neo4j"
+            },
+            {
+                "database": "virtuoso",
+                "requiredData": {
+                    "predicate": "skos:definition"
+                }
+            }
+        ],
+        "name": [
+            {
+                "database": "neo4j"
+            },
+            {
+                "database": "virtuoso",
+                "requiredData": {
+                    "predicate": "rdfs:label"
+                }
+            }
+        ],
+        "involve": [
+            {
+                "database": "neo4j"
+            },
+            {
+                "database": "virtuoso",
+                "requiredData": {
+                    "predicate": "issac:involve"
+                }
+            }
+        ],
+        "location": [
+            {
+                "database": "neo4j"
+            },
+            {
+                "database": "virtuoso",
+                "requiredData": {
+                    "predicate": "issac:takePlace"
+                }
+            }
+        ]
+    }
+}

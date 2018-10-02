@@ -1,0 +1,47 @@
+{
+    "Processus": {
+        "attributes": ["name", "description"],
+        "relationships": {
+            "agents": {
+                "entityRole": "subject",
+                "relationshipLabel": "involve",
+                "defaultRelationshipAttributes": {
+                    "namedGraph": "context_processus_added"
+                }
+            },
+            "owners": {
+                "entityRole": "subject",
+                "relationshipLabel": "hasOwner",
+                "defaultRelationshipAttributes": {
+                    "namedGraph": "context_processus_added"
+                }
+            },
+            "context": {
+                "entityRole": "subject",
+                "relationshipLabel": "hasContext",
+                "defaultRelationshipAttributes": {
+                    "namedGraph": "context_processus_added"
+                }
+            }
+        }
+    },
+    "Context": {
+        "attributes": [],
+        "relationships": {
+            "location": {
+                "entityRole": "subject",
+                "relationshipLabel": "takePlace",
+                "defaultRelationshipAttributes": {
+                    "namedGraph": "context_processus_added"
+                }
+            },
+            "primaryPlant": {
+                "entityRole": "subject",
+                "relationshipLabel": "hasPrimaryPlant",
+                "defaultRelationshipAttributes": {
+                    "namedGraph": "context_processus_added"
+                }
+            }
+        }
+    }
+}

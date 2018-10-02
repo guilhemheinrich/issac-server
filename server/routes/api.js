@@ -14,6 +14,17 @@ router.get('/neo', (req, res) => {
     res.send('Zongo in da place');
 });
 
+/* ADD or SET one element */
+router.post('/populateOne', (req, res) => {
+    const driver = neo4j.driver("bolt://localhost", neo4j.auth.basic("neo4j", "pic3.14"));
+    const session = driver.session();
+    const resultPromise = session.run(
+        'CREATE (a:Person {name: $name}) RETURN a',
+        {name: 'Zongo'}
+      );
+    res.send('Zongo in da place');
+});
+
 router.get('/', (req, res) => {
     res.send('api works');
 });
