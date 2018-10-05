@@ -1,0 +1,53 @@
+{
+    "classSettings": {
+        "Processus": {
+            "protocols": {
+                "sparql1.1": {
+                    "predicate": "a",
+                    "subject": "issac:Processus"
+                }
+            }
+        },
+        "Context": {
+            "protocols": {
+                "sparql1.1": {
+                    "predicate": "a",
+                    "subject": "issac:Context"
+                }
+            }
+        }
+    },
+    "atributesSettings": {
+        "description": {
+            "protocols": {
+                "sparql1.1": {
+                    "predicate": "skos:definition"
+                }
+            }
+        },
+        "name": {
+            "protocols": {
+                "sparql1.1": {
+                    "predicate": "rdfs:label"
+                }
+            }
+        },
+        "involve": {
+            "protocols": {
+                "sparql1.1": {
+                    "predicate": "issac:involve"
+                }
+            }
+        },
+        "location": {
+            "protocols": {
+                "sparql1.1": {
+                    "database": "virtuoso",
+                    "requestData": {
+                        "predicate": "issac:takePlace"
+                    }
+                }
+            }
+        }
+    }
+}

@@ -1,0 +1,51 @@
+{
+    "Agent": {
+        "Pkey": "email",
+        "attributes": {
+            "first_name": "string",
+            "last_name": "string",
+            "email": "string",
+            "group": "string"
+        }      
+    },
+    "SKOSnode": {
+        "Pkey": "uri",
+        "attributes": {
+            "uri": "string",
+            "label": "string"
+        }
+    },
+    "Processus": {
+        "Pkey": "uri",
+        "attributes": {
+            "uri": "string",
+            "name": "string",
+            "description": "string",
+            "agents": {
+                "type": "Object",
+                "class": "SKOSnode"
+            },
+            "owners": {
+                "type": "Object",
+                "class": "Agent"
+            },
+            "context": {
+                "type": "Object",
+                "class": "Context"
+            }
+        }
+    },
+    "Context": {
+        "Pkey": "",
+        "attributes": {
+            "location": {
+                "type": "Object",
+                "class": "SKOSnode"
+            },
+            "primaryPlant": {
+                "type": "Object",
+                "class": "SKOSnode"
+            }
+        }
+    }
+}

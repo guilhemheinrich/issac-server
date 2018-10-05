@@ -1,0 +1,63 @@
+{
+    "Processus": {
+        "namedGraph": "context_processus_added",
+
+        "objects": {
+            "uri": {
+                "namespaces": "issac",
+                "object": "issac:Processus"
+            },
+            "name": {
+                "namespaces": "rdfs",
+                "predicate": "rdfs:label"
+            },
+            "description": {
+                "namespaces": "skos",
+                "predicate": "skos:definition"
+            },
+            "agents": {
+                "namespaces": "issac",
+                "predicate": "issac:involve"
+            },
+            "owners": {
+                "namespaces": "issac",
+                "predicate": "issac:hasOwner"
+            },
+            "context": {
+                "namespaces": "issac",
+                "predicate": "issac:hasContext"
+            }
+        }
+    },
+    "Context": {
+        "namespaces": "issac",
+        "object": "issac:Context",
+        "objects": {
+            "location": {
+                "namespaces": "issac",
+                "predicate": "issac:hasLocation"
+            },
+            "primaryPlant": {
+                "namespaces": "issac",
+                "predicate": "issac:hasPrimaryPlant"
+            }
+        }
+    },
+    "Agent": {
+        "namespaces": "foaf",
+        "object": "foaf:Person",
+        "objects": {
+
+        }
+    },
+    "SKOSnode": {
+        "namespaces": "skos",
+        "object": "Concept",
+        "objects": {
+            "label": {
+                "namespaces": "skos",
+                "predicate": "skos:prefLabel"
+            }
+        }
+    }
+}

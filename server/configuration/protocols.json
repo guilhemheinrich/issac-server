@@ -1,0 +1,23 @@
+{
+    "sparql1.1": {
+        "predicate": "a",
+        "namespaces":{
+            "issac": { "prefix": "issac", "uri": "http://www.semanticweb.org/heinrich/ontologies/ECPP#" },
+            "rdfs": { "prefix": "rdfs", "uri": "http://www.w3.org/2000/01/rdf-schema#" },
+            "skos": { "prefix": "skos", "uri": "http://www.w3.org/2004/02/skos/core#" },
+            "oa": { "prefix": "oa", "uri": "http://www.w3.org/ns/oa#" },
+            "foaf": { "prefix": "foaf", "uri": "http://xmlns.com/foaf/0.1/" },
+            "admin": { "prefix": "admin", "uri": "http://www.semanticweb.org/heinrich/ontologies/2018/administration#" },
+            "dcterms": { "prefix": "dcterms", "uri": "http://purl.org/dc/terms/" }
+        },
+        "namedGraph":{
+            "context_processus_added": {"prefix": "context_processus_added","uri": "http://ECPP_models/processus_added/set/" },
+            "prefix_processus": {"prefix": "prefix_processus","uri": "http://ECPP_models/process/id/" },
+            "prefix_action": {"prefix": "prefix_action","uri": "http://ECPP_models/action/" },
+            "context_administration": {"prefix": "context_administration","uri": "http://ECPP_administration/agent/set/" },
+            "prefix_agent": {"prefix": "prefix_agent","uri": "http://ECPP_administration/agent/id/" },
+            "context_message": {"prefix": "context_message","uri": "http://ECPP_administration/message/set/" },
+            "prefix_message": {"prefix": "prefix_message","uri": "http://ECPP_administration/message/id/" }
+        }
+    }
+}

@@ -1,0 +1,14 @@
+{
+    "neo4j": {
+        "requestProtocol": "bolt",
+        "accesspoint": "bolt://localhost",
+        "authentification": {
+            "user": "neo4j",
+            "password": "pic3.14"
+        }
+    },
+    "virtuoso": {
+        "requestProtocol": "sparql1.1",
+        "accesspoint": "http://147.99.7.61:8890/sparql"
+    }
+}
