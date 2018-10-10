@@ -11,8 +11,8 @@ var unique = require('../common/unique')
 var _namedGraph = (model, attribute) => {
     let out_namedGraph = '';
     out_namedGraph = contingency(
-        bindings[model].namedGraph,
-        bindings[model].objects[attribute].namedGraph
+        [bindings, [model, 'namedGraph']],
+        [bindings, [model, 'objects', attribute, 'namedGraph']]
     );
     if (out_namedGraph) {
         if (sparql_default.prefixes[out_namedGraph]) {
@@ -29,26 +29,25 @@ var _namedGraph = (model, attribute) => {
 var _prefixes = (model, attribute, prefixes) => {
     let out_prefixes = {};
     return contingency(
-        bindings[model].prefixes,
-        bindings[model].namespaces,
-        bindings[model].objects[attribute].prefixes,
-        bindings[model].objects[attribute].namespaces,
+        [bindings, [model, 'prefixes']],
+        [bindings, [model, 'namespaces']],
+        [bindings, [model, 'objects', attribute, 'prefixes']],
+        [bindings, [model, 'objects', attribute, 'namespaces']]
     );
-    console.log(out_prefixes)
 }
 
 var _buildTripleSkeleton = (model, attribute) => {
     let subject = contingency(
-        sparql_default.subject,
-        bindings[model].objects[attribute].subject
+        [sparql_default, ['subject']],
+        [bindings, [model, 'objects', attribute, 'subject']]
     );
     let predicate = contingency(
-        sparql_default.predicate,
-        bindings[model].objects[attribute].predicate
+        [sparql_default, ['predicate']],
+        [bindings, [model, 'objects', attribute, 'predicate']]
     );
     let object = contingency(
-        sparql_default.object,
-        bindings[model].objects[attribute].object
+        [sparql_default, ['object']],
+        [bindings, [model, 'objects', attribute, 'object']]
     )
     return {
         subject: subject,
@@ -90,6 +89,8 @@ var _insert = (model, data, quads, prefixes) => {
         }
 
         if (attributesValues[attribute]) {
+            // Find the relevant named graph (if any)
+            // Does'nt handle the case it is lacking (bad habits anyway)
             let namedGraph = _namedGraph(model, attribute);
             let values;
             if (Array.isArray(attributesValues[attribute])) {
@@ -98,7 +99,6 @@ var _insert = (model, data, quads, prefixes) => {
                 values = [attributesValues[attribute]];
             }
             values.forEach((value) => {
-
                 let tripleSkeleton = _buildTripleSkeleton(model, attribute);
                 tripleSkeleton.subject = `${attributesValues[Pkey]}`;
                 if (attribute !== Pkey) {
@@ -108,14 +108,12 @@ var _insert = (model, data, quads, prefixes) => {
                         tripleSkeleton.object = _parseObject(model, attribute, value);
                     }
                 }
-
                 if (!quads[namedGraph.uri]) {
                     quads[namedGraph.uri] = [tripleSkeleton]
                 } else {
                     quads[namedGraph.uri].push(tripleSkeleton);
                 }
             })
-
         }
     }));
     return data[Pkey];
@@ -149,7 +147,13 @@ var insert = (validObjects) => {
     Object.getOwnPropertyNames(quads).forEach((namedGraph) => {
         sparqlEngine.generateAddQuery(namedGraph, quads[namedGraph], addQuery)
     })
-    let generator = new sparqlEngine.SparqlGenerator({allPrefixes: prefixesObject});
+
+    let generator = new sparqlEngine.SparqlGenerator(
+        {allPrefixes: {
+            ...sparql_default.namespaces,
+            ...sparql_default.prefixes
+            }
+        });
     console.log(addQuery);
     generator.stringify(addQuery)
     console.log(
