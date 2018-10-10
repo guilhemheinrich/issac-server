@@ -30,6 +30,7 @@
         }
     },
     "Context": {
+        "namedGraph": "context_processus_added",
         "namespaces": "issac",
         "object": "issac:Context",
         "objects": {
@@ -44,10 +45,25 @@
         }
     },
     "Agent": {
+        "namedGraph": "context_administration",
         "namespaces": "foaf",
-        "object": "foaf:Person",
         "objects": {
-
+            "uri": {
+                "prefixes": "",
+                "object": "foaf:Person"
+            },
+            "first_name": {
+                "predicate": "foaf:firstName"
+            },
+            "last_name": {
+                "predicate": "foaf:lastName"
+            },
+            "email": {
+                "predicate": "foaf:mbox"
+            },
+            "group": {
+                "predicate": "foaf:member"
+            }
         }
     },
     "SKOSnode": {

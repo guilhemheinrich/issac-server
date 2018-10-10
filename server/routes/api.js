@@ -6,6 +6,7 @@ const sparqlHandler = require('../post-specifications/sparql1.1.spec.js')
 
 const neo4j = require('neo4j-driver').v1;
 
+var modelValidator = require('../common/model_validation').checkModel
 /* GET api listing. */
 router.get('/neo', (req, res) => {
     const driver = neo4j.driver("bolt://localhost", neo4j.auth.basic("neo4j", "pic3.14"));
@@ -28,13 +29,14 @@ Pattern as json is :
 }
 
 */
-router.post('/POST/one', (req, res) => {
-    object = req.body;
-    console.log(object)
+router.post('/POST', (req, res) => {
+    objects = req.body;
+    let validObjects = modelValidator(...objects);
+    quads = sparqlHandler.insert(validObjects);
+
     // console.log(req.body.type)
     // console.log(_resolver.getProtocols(object));
-    sparqlHandler.insert(object);
-    res.send('ok');
+    res.send(quads);
 });
 
 router.get('/', (req, res) => {

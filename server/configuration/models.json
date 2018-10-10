@@ -1,7 +1,8 @@
 {
     "Agent": {
-        "Pkey": "email",
+        "Pkey": "uri",
         "attributes": {
+            "uri": "string",
             "first_name": "string",
             "last_name": "string",
             "email": "string",
@@ -23,11 +24,13 @@
             "description": "string",
             "agents": {
                 "type": "Object",
-                "class": "SKOSnode"
+                "class": "SKOSnode",
+                "multiple": true
             },
             "owners": {
                 "type": "Object",
-                "class": "Agent"
+                "class": "Agent",
+                "multiple": true
             },
             "context": {
                 "type": "Object",
@@ -36,8 +39,9 @@
         }
     },
     "Context": {
-        "Pkey": "",
+        "Pkey": "uri",
         "attributes": {
+            "uri": "string",
             "location": {
                 "type": "Object",
                 "class": "SKOSnode"
