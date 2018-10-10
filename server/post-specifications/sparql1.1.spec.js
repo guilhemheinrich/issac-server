@@ -1,6 +1,6 @@
 var sparql_default = require('../configuration/protocols')["sparql1.1"]
 var models = require('../configuration/models.json');
-var bindings = require('../configuration/data-bindings/sparql1.1.json')
+var bindings = require('../configuration/protocols-models-bindings/sparql1.1.json')
 
 var sparqlEngine = require('./sparql1.1_dependency/sparql')
 
@@ -74,7 +74,7 @@ var _parseObject = (model, attribute, value) => {
     }
 }
 
-var _insert = (model, data, quads, prefixes) =>  {   
+var _insert = (model, data, quads, prefixes) => {
     skeletonModel = models[model].attributes;
     Pkey = models[model].Pkey;
     attributesValues = data;
@@ -89,25 +89,27 @@ var _insert = (model, data, quads, prefixes) =>  {
                 values = [attributesValues[attribute]];
             }
             values.forEach((value) => {
-                if (typeof(value) === 'object') {
-                    _insert(skeletonModel[attribute].class, value, quads, prefixes);
-                } else {
-                    let tripleSkeleton = _buildTripleSkeleton(model, attribute);
-                    tripleSkeleton.subject = `${attributesValues[Pkey]}`;
-                    if (attribute !== Pkey) {
+ 
+                let tripleSkeleton = _buildTripleSkeleton(model, attribute);
+                tripleSkeleton.subject = `${attributesValues[Pkey]}`;
+                if (attribute !== Pkey) {
+                    if (typeof (value) === 'object') {
+                        tripleSkeleton.object = _insert(skeletonModel[attribute].class, value, quads, prefixes);
+                    } else {
                         tripleSkeleton.object = _parseObject(model, attribute, value);
                     }
-                    if (!quads[namedGraph.uri]) {
-                        quads[namedGraph.uri] = [tripleSkeleton]
-                    } else {
-                        quads[namedGraph.uri].push(tripleSkeleton);
-                    }
+                }
+
+                if (!quads[namedGraph.uri]) {
+                    quads[namedGraph.uri] = [tripleSkeleton]
+                } else {
+                    quads[namedGraph.uri].push(tripleSkeleton);
                 }
             })
 
         }
     }));
-
+    return data[Pkey];
 }
 
 var insert = (validObjects) => {
@@ -135,7 +137,6 @@ var insert = (validObjects) => {
     console.log(addQuery);
     console.log(generator.stringify(addQuery));
     return quads;
-    // return 'hello';
 }
 module.exports = {
     insert: insert

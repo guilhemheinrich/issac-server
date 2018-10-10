@@ -1,0 +1,25 @@
+{
+    "Agent": {
+        "includes": [
+            "virtuoso"
+        ]  
+    },
+    "SKOSnode": {
+        "permissions": [
+            "read"
+        ],
+        "includes": [
+            "virtuoso"
+        ]
+    },
+    "Processus": {
+        "includes": [
+            "virtuoso"
+        ]  
+    },
+    "Context": {
+        "includes": [
+            "virtuoso"
+        ]
+    }
+}

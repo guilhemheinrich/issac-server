@@ -32,10 +32,9 @@ Pattern as json is :
 router.post('/POST', (req, res) => {
     objects = req.body;
     let validObjects = modelValidator(...objects);
+    
     quads = sparqlHandler.insert(validObjects);
 
-    // console.log(req.body.type)
-    // console.log(_resolver.getProtocols(object));
     res.send(quads);
 });
 
