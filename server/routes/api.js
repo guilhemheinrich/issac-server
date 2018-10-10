@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 
 const _resolver = require('../configuration/functions');
-const sparqlHandler = require('../post-specifications/sparql1.1.spec.js')
+const sparqlHandler = require('../protocols-specifications/sparql1.1.spec.js')
 
 const neo4j = require('neo4j-driver').v1;
 

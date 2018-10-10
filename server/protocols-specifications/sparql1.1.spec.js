@@ -5,7 +5,7 @@ var bindings = require('../configuration/protocols-models-bindings/sparql1.1.jso
 var sparqlEngine = require('./sparql1.1_dependency/sparql')
 
 var contingency = require('../common/contingency_chain').contingency
-
+var unique = require('../common/unique')
 
 
 var _namedGraph = (model, attribute) => {
@@ -26,13 +26,15 @@ var _namedGraph = (model, attribute) => {
     }
 }
 
-var _prefixes = (model, attribute) => {
+var _prefixes = (model, attribute, prefixes) => {
     let out_prefixes = {};
-    contingency(
+    return contingency(
         bindings[model].prefixes,
-        bindings[model].objects[attribute].prefixes
+        bindings[model].namespaces,
+        bindings[model].objects[attribute].prefixes,
+        bindings[model].objects[attribute].namespaces,
     );
-    out_prefixes
+    console.log(out_prefixes)
 }
 
 var _buildTripleSkeleton = (model, attribute) => {
@@ -80,6 +82,13 @@ var _insert = (model, data, quads, prefixes) => {
     attributesValues = data;
     sparqlBinding = bindings[model].objects;
     sparqlBinding = Object.getOwnPropertyNames(sparqlBinding).forEach((attribute => {
+        current_prefix = _prefixes(model, attribute);
+        if (Array.isArray(current_prefix)) {
+            prefixes.push(...current_prefix);
+        } else {
+            prefixes.push(current_prefix);
+        }
+
         if (attributesValues[attribute]) {
             let namedGraph = _namedGraph(model, attribute);
             let values;
@@ -89,7 +98,7 @@ var _insert = (model, data, quads, prefixes) => {
                 values = [attributesValues[attribute]];
             }
             values.forEach((value) => {
- 
+
                 let tripleSkeleton = _buildTripleSkeleton(model, attribute);
                 tripleSkeleton.subject = `${attributesValues[Pkey]}`;
                 if (attribute !== Pkey) {
@@ -114,15 +123,22 @@ var _insert = (model, data, quads, prefixes) => {
 
 var insert = (validObjects) => {
     let quads = {};
-    prefixes = {};
+    prefixes = [];
     validObjects.forEach((object) => {
         let model = object.type;
         let instance = object.data;
         _insert(model, instance, quads, prefixes);
     });
-
+    // Cannot be put upper because '=' instanciate a new array
+    prefixes = prefixes.filter(unique);
+    prefixesObject = {};
+    prefixes.forEach((alias) => {
+        match = sparql_default.namespaces[alias];
+        prefixesObject[match.prefix] = match.uri;
+    });
     let addQuery = {
         type: 'update',
+        prefixes: prefixesObject,
         updates: [
             {
                 updateType: 'insert',
@@ -133,12 +149,31 @@ var insert = (validObjects) => {
     Object.getOwnPropertyNames(quads).forEach((namedGraph) => {
         sparqlEngine.generateAddQuery(namedGraph, quads[namedGraph], addQuery)
     })
-    let generator = new sparqlEngine.SparqlGenerator();
+    let generator = new sparqlEngine.SparqlGenerator({allPrefixes: prefixesObject});
     console.log(addQuery);
-    console.log(generator.stringify(addQuery));
+    generator.stringify(addQuery)
+    console.log(
+        generator.stringify(addQuery)
+        );
     return quads;
 }
 module.exports = {
     insert: insert
 
 }
+
+// var parsedQuery = parser.parse(`
+// PREFIX issac: <http://issac/> 
+// INSERT DATA {  
+//     GRAPH <http://ECPP_administration/agent/set/> {   
+//     <issac:01354dsz> <rdfs:label> "Test 2"^^<xsd:string>.
+//     <issac:01354dsz> <rdfs:label> "Test 2"^^<xsd:string>.
+//     <issac:01354dsz> <issac:involve> <http://hello>.
+//     <issac:01354dsz> <issac:hasOwner> <http://Bob>.
+//     }
+//     GRAPH <http://ECPP_administration/agent/set/> {
+//     <http://Bob> <rdf:type> <foaf:Person>.
+//     <http://Bob> <foaf:firstName> "Bob"^^<xsd:string>.
+//     <http://Bob> <foaf:mbox> "bob@gmail.com"^^<xsd:string>.
+//     }
+// }`)
