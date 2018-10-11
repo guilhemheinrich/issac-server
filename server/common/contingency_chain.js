@@ -1,4 +1,6 @@
 
+var unroller = require('./safe_accessor')
+
 var contingency_chain = (...contingency_chain) => {
     let out_value;
     contingency_chain.forEach((element) => {
@@ -12,10 +14,6 @@ var contingency_chain = (...contingency_chain) => {
     return out_value;
 }
 
-var _unroller = (reference, attribute) => {
-    return reference[attribute];
-}
-
 // All the arguments have the form :
 // [object, [sequence]]
 var contingency_chain2 = (...contingency_chain) => {
@@ -23,14 +21,7 @@ var contingency_chain2 = (...contingency_chain) => {
     contingency_chain.forEach((element) => {
         rootObj = element[0];
         sequence = element[1];
-        // currentRef 
-        let refOrValue = rootObj;
-        for (att_cpt = 0; att_cpt < sequence.length; att_cpt++) {
-            refOrValue = _unroller(refOrValue, sequence[att_cpt]);
-            if (!refOrValue) {
-                break;
-            }
-        }
+        refOrValue = unroller(rootObj, sequence);
 
         if (refOrValue) {
             out_value = refOrValue;

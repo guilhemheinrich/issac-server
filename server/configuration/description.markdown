@@ -13,7 +13,7 @@ At each step, the relevant information (if present) overides the current one.
 
 #### Protocols
 
-This file defaults settings for the request languages. Each of those languages **must** implements the necessary parsing functions.
+This file defaults settings for the request languages. Each of those languages **must** implements the necessary parsing functions for the wanted operations
 
 #### Databases
 
