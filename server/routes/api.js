@@ -38,6 +38,19 @@ router.post('/POST', (req, res) => {
     res.send(quads);
 });
 
+
+router.post('/POST/:objectID', function (req, res) {
+    objects = req.body;
+    let validObjects;
+    if (Array.isArray(objects)) {
+        validObjects = modelValidator(req.params.objectID, objects);
+    } else {
+        validObjects = modelValidator(req.params.objectID, [objects]);
+    }
+    console.log(validObjects);
+    res.send(req.params)
+  })
+
 router.get('/', (req, res) => {
     res.send('api works');
 });

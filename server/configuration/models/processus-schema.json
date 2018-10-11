@@ -1,0 +1,77 @@
+{
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "$id": "http://issac/processus",
+    "title": "Processus",
+    "description": "Processus is responsable for the evolution of any system described",
+    "type": "object",
+    "properties": {
+        "uri": {
+            "type": "string",
+            "format": "uri"
+        },
+        "name": {
+            "description": "Name of the processus",
+            "type": "string"
+        },
+        "description": {
+            "description": "Description of the processus in natural language",
+            "type": "string"
+        },
+        "agents": {
+            "description": "Concepts/entities concerned by this processus",
+            "type": "array",
+            "items": {
+                "anyOf": [
+                    {
+                        "$ref": "http://issac/skos-node"
+                    },
+                    {
+                        "type": "string",
+                        "format": "uri"
+                    }
+                ]
+            },
+            "uniqueItems": true
+        },
+        "owners": {
+            "description": "Owners/creators of this processus",
+            "type": "array",
+            "items": {
+                "anyOf": [
+                    {
+                        "$ref": "http://administration/agent"
+                    },
+                    {
+                        "type": "string",
+                        "format": "uri"
+                    }
+                ]
+            },
+            "minItems": 1,
+            "uniqueItems": true
+        },
+        "contexts": {
+            "description": "Contexts in which this processus take place",
+            "type": "array",
+            "items": {
+                "anyOf": [
+                    {
+                        "$ref": "http://issac/context"
+                    },
+                    {
+                        "type": "string",
+                        "format": "uri"
+                    }
+                ]
+            },
+            "minItems": 1,
+            "uniqueItems": true
+        }
+    },
+    "required": [
+        "uri",
+        "contexts",
+        "name",
+        "owners"
+    ]
+}

@@ -1,0 +1,10 @@
+{
+    
+    "mappings" : {
+
+        "processus": "http://issac/processus",
+        "context": "http://issac/context",
+        "agent": "http://administration/agent",
+        "skos-node": "http://issac/skos-node"
+    }
+}
