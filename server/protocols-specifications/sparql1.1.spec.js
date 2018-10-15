@@ -1,5 +1,5 @@
 var sparql_default = require('../configuration/protocols')["sparql1.1"]
-var models = require('../configuration/models.json');
+var models = require('./sparql1.1_dependency/models.json');
 var bindings = require('../configuration/protocols-models-bindings/sparql1.1.json')
 
 var sparqlEngine = require('./sparql1.1_dependency/sparql')
@@ -75,7 +75,7 @@ var _parseObject = (model, attribute, value) => {
     }
 }
 
-var _insert = (model, data, quads, prefixes) => {
+var _morphQuads = (model, data, quads, prefixes, nested_objects) => {
     skeletonModel = models[model].attributes;
     Pkey = models[model].Pkey;
     attributesValues = data;
@@ -103,7 +103,16 @@ var _insert = (model, data, quads, prefixes) => {
                 tripleSkeleton.subject = `${attributesValues[Pkey]}`;
                 if (attribute !== Pkey) {
                     if (typeof (value) === 'object') {
-                        tripleSkeleton.object = _insert(skeletonModel[attribute].class, value, quads, prefixes);
+                        nestedModel = models[skeletonModel[attribute].class];
+                        // Handle Pkey identified object
+                        tripleSkeleton.object = nestedModel.Pkey;
+                        // And add it to the next loop
+                        if (!nested_objects[nestedModel]) {
+                            nested_objects[nestedModel] = [];
+                        }
+
+                        nested_objects[nestedModel].push(value);
+                        //  _insert(skeletonModel[attribute].class, value, quads, prefixes);
                     } else {
                         tripleSkeleton.object = _parseObject(model, attribute, value);
                     }
@@ -119,14 +128,20 @@ var _insert = (model, data, quads, prefixes) => {
     return data[Pkey];
 }
 
-var insert = (validObjects) => {
+var insertRequest = (validObjects, model, restricted_attributes, nested_objects) => {
     let quads = {};
     prefixes = [];
-    validObjects.forEach((object) => {
-        let model = object.type;
-        let instance = object.data;
-        _insert(model, instance, quads, prefixes);
-    });
+    validObjects
+        .map((object) => {
+            let projection = {};
+            restricted_attributes.forEach((attribute) => {
+                projection[attribute] = object[attribute];
+            })
+            return projection;
+        })
+        .forEach((object) => {
+            _morphQuads(model, object, quads, prefixes, nested_objects);
+        });
     // Cannot be put upper because '=' instanciate a new array
     prefixes = prefixes.filter(unique);
     prefixesObject = {};
@@ -159,10 +174,10 @@ var insert = (validObjects) => {
     console.log(
         generator.stringify(addQuery)
         );
-    return quads;
+    return nested_objects;
 }
 module.exports = {
-    insert: insert
+    insertRequest: insertRequest
 
 }
 

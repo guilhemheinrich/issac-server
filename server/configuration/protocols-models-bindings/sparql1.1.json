@@ -3,6 +3,7 @@
         "namedGraph": "context_processus_added",
         "permissions": ["read", "write"],
         "namespaces": ["issac", "rdfs", "skos"],
+        "Pkey": "uri",
         "objects": {
             "uri": {
                 "object": "issac:Processus"
@@ -46,7 +47,6 @@
         "namespaces": "foaf",
         "objects": {
             "uri": {
-                "prefixes": "",
                 "object": "foaf:Person"
             },
             "first_name": {

@@ -1,9 +1,9 @@
 
 var Ajv = require('ajv');
 var schemas = [];
-rootDir = '/home/gheinrich/issac-server/server/configuration/models';
+rootDir = '/home/gheinrich/issac-server/server/configuration/models-schemas';
 require("fs").readdirSync(rootDir).forEach(function (file) {
-    console;log('Shemas loaded from : ' + rootDir);
+    console.log('Schemas loaded from : ' + rootDir);
     console.log(rootDir + '/' + file);
     schema = require(rootDir + '/' + file)
     schemas.push(schema);

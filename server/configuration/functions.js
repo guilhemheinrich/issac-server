@@ -1,7 +1,7 @@
 protocols_map = require('./protocols.json')
 db_map = require('./databases.json')
 modXprot_map = require('./modelXprotocol.json')
-models_map = require('./models.json')
+// models_map = require('../    /models.json')
 
 module.exports = {
     getDatabases: function(objectInstance) {

@@ -1,25 +1,33 @@
 {
     "Agent": {
-        "includes": [
-            "virtuoso"
-        ]  
+        "databases": [
+            {
+                "name": "virtuoso"
+            }
+        ]
     },
     "SKOSnode": {
-        "permissions": [
-            "read"
-        ],
-        "includes": [
-            "virtuoso"
+        "databases": [
+            {
+                "name": "virtuoso",
+                "permissions": [
+                    "read"
+                ]
+            }
         ]
     },
     "Processus": {
-        "includes": [
-            "virtuoso"
-        ]  
+        "databases": [
+            {
+                "name": "virtuoso"
+            }
+        ]    
     },
     "Context": {
-        "includes": [
-            "virtuoso"
-        ]
+        "databases": [
+            {
+                "name": "virtuoso"
+            }
+        ]      
     }
 }

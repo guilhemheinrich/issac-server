@@ -4,11 +4,6 @@ var unroller = require('./safe_accessor')
 var contingency_chain = (...contingency_chain) => {
     let out_value;
     contingency_chain.forEach((element) => {
-        // try {
-        //     console.log(element);
-        // } catch (e){
-        //     console.log(e);
-        // }
         if (element) out_value = element;
     })
     return out_value;
@@ -20,8 +15,12 @@ var contingency_chain2 = (...contingency_chain) => {
     let out_value;
     contingency_chain.forEach((element) => {
         rootObj = element[0];
-        sequence = element[1];
-        refOrValue = unroller(rootObj, sequence);
+        if (element[1]) {
+            sequence = element[1];
+            refOrValue = unroller(rootObj, sequence);
+        } else {
+            refOrValue = rootObj;
+        }
 
         if (refOrValue) {
             out_value = refOrValue;

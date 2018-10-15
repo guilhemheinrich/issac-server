@@ -2,7 +2,7 @@
     "Agent": {
         "Pkey": "uri",
         "attributes": {
-            "uri": "string",
+            "uri": "uri",
             "first_name": "string",
             "last_name": "string",
             "email": "string",
@@ -12,14 +12,14 @@
     "SKOSnode": {
         "Pkey": "uri",
         "attributes": {
-            "uri": "string",
+            "uri": "uri",
             "label": "string"
         }
     },
     "Processus": {
         "Pkey": "uri",
         "attributes": {
-            "uri": "string",
+            "uri": "uri",
             "name": "string",
             "description": "string",
             "agents": {
@@ -41,7 +41,7 @@
     "Context": {
         "Pkey": "uri",
         "attributes": {
-            "uri": "string",
+            "uri": "uri",
             "location": {
                 "type": "Object",
                 "class": "SKOSnode"

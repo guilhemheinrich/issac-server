@@ -1,0 +1,4 @@
+{
+    "sparql1.1": "sparql1.1.spec.js", 
+    "neo4j": "neo4j.spec.js"
+}
