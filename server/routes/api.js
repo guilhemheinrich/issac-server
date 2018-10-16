@@ -14,8 +14,8 @@ router.get('/neo', (req, res) => {
     const session = driver.session();
     const resultPromise = session.run(
         'CREATE (a:Person {name: $name}) RETURN a',
-        {name: 'Zongo'}
-      );
+        { name: 'Zongo' }
+    );
     res.send('Zongo in da place');
 });
 
@@ -33,7 +33,7 @@ Pattern as json is :
 router.post('/POST', (req, res) => {
     objects = req.body;
     let validObjects = modelValidator(...objects);
-    
+
     quads = sparqlHandler.insert(validObjects);
 
     res.send(quads);
@@ -51,16 +51,21 @@ router.post('/POST/:objectID', function (req, res) {
     }
 
     denestify = require('../models').denestify;
-    allObjects = denestify(model, validObjects);
+    modelXobjects = denestify(model, validObjects);
+    console.log(modelXobjects);
+    Object.getOwnPropertyNames(modelXobjects)
+        .forEach((model) => {
+            databasesFunctions.writePipeline(model, modelXobjects[model]);
+        });
     // modelXobjects = [{model: model, objects: validObjects}];
     // while (objects.length > 0) {
     //     model = modelXobjects[0].model;
     //     objects = modelXobjects[0].objects;
     //     databasesFunctions.writePipeline(model, objects);
     // }
-    console.log(allObjects);
+    // console.log(allObjects);
     res.send(req.params)
-  })
+})
 
 router.get('/', (req, res) => {
     res.send('api works');
@@ -68,10 +73,3 @@ router.get('/', (req, res) => {
 
 
 module.exports = router;
-
-var random = () => {
-    return Math.random() > 0.3
-}
-while (random()) {
-    console.log('one more')
-}

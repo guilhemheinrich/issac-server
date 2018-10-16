@@ -169,8 +169,7 @@ var insertRequest = (validObjects, model, restricted_attributes, nested_objects)
             ...sparql_default.prefixes
             }
         });
-    console.log(addQuery);
-    generator.stringify(addQuery)
+
     console.log(
         generator.stringify(addQuery)
         );

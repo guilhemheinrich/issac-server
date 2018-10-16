@@ -36,14 +36,16 @@ var _potentialObjectsAttributes = (model) => {
         attribute = models[model][attributeName];
         if (attribute.anyOf) {
             if (Object.keys(attribute.anyOf).includes('$ref')) {
-                potential = {property: attributeName,
+                potential = {
+                    property: attributeName,
                     model: schemasXclass[attribute.anyOf['$ref']]
                 }
                 possibleObjectsAttribute.push(potential)
             }
         }
         if (attribute['$ref']) {
-            potential = {property: attributeName,
+            potential = {
+                property: attributeName,
                 model: schemasXclass[attribute['$ref']]
             }
             possibleObjectsAttribute.push(potential)
@@ -54,7 +56,8 @@ var _potentialObjectsAttributes = (model) => {
                 items.anyOf.forEach((item) => {
 
                     if (item['$ref']) {
-                        potential = {property: attributeName,
+                        potential = {
+                            property: attributeName,
                             model: schemasXclass[item['$ref']]
                         }
                         possibleObjectsAttribute.push(potential)
@@ -62,7 +65,8 @@ var _potentialObjectsAttributes = (model) => {
                 })
             }
             if (items['$ref']) {
-                potential = {property: attributeName,
+                potential = {
+                    property: attributeName,
                     model: schemasXclass[items['$ref']]
                 }
                 possibleObjectsAttribute.push(potential)
@@ -75,30 +79,47 @@ var _potentialObjectsAttributes = (model) => {
 var splitInstances = (model, objects) => {
     // _model = model;
     // _objects = objects;
-    _inObjects = {[model]: objects}
-    objectsPerClass = {..._inObjects}
+    _inObjects = { [model]: objects }
+    objectsPerClass = { ..._inObjects }
     // objectsPerClass = {};
     do {
         nestedObjects = {};
         // nestedObjects = {};
-        Object.keys(_inObjects).forEach((modelName) => 
-        {
+        Object.keys(_inObjects).forEach((modelName) => {
             _objects = _inObjects[modelName];
             potentialObjectsAttribute = _potentialObjectsAttributes(modelName);
             _objects.forEach((object) => {
                 possibleObjectsAttribute.forEach((potentialObjectProperty) => {
-                    if (typeof(object[potentialObjectProperty.property]) === 'object'){
-                        if (!objectsPerClass[potentialObjectProperty.model]) {
-                            // objectsPerClass[potentialObjectsAttributes.model] = [];
-                            nestedObjects[potentialObjectProperty.model] = [];
+                    if (Array.isArray(object[potentialObjectProperty.property])) {
+                        object[potentialObjectProperty.property].forEach((item) => {
+                            if (typeof (item) === 'object') {
+                                if (!objectsPerClass[potentialObjectProperty.model]) {
+                                    nestedObjects[potentialObjectProperty.model] = [];
+                                }
+                                nestedObjects[potentialObjectProperty.model].push(item)
+                            }
+                        })
+                    } else {
+                        if (typeof (object[potentialObjectProperty.property]) === 'object') {
+                            if (!objectsPerClass[potentialObjectProperty.model]) {
+                                nestedObjects[potentialObjectProperty.model] = [];
+                            }
+                            nestedObjects[potentialObjectProperty.model].push(object[[potentialObjectProperty.property]])
                         }
-                        // objectsPerClass[potentialObjectsAttributes.model].push(object[[potentialObjectsAttributes.property]])
-                        nestedObjects[potentialObjectProperty.model].push(object[[potentialObjectProperty.property]])
                     }
                 })
             })
         })
-        objectsPerClass = {...objectsPerClass, ...nestedObjects};
+        // objectsPerClass = { ...objectsPerClass, ...nestedObjects };
+        // Safey merge
+        Object.getOwnPropertyNames(nestedObjects)
+            .forEach((propertyName) => {
+                if (!objectsPerClass[propertyName]) {
+                    objectsPerClass[propertyName] = [];
+                }
+                objectsPerClass[propertyName].push(...nestedObjects[propertyName]);
+            })
+
         _inObjects = nestedObjects;
     }
     while (Object.getOwnPropertyNames(nestedObjects).length > 0)
@@ -109,7 +130,7 @@ var _splitInstances = (model, objects, _objectsPerClass) => {
     potentialObjectsAttribute = _potentialObjectsAttributes(model);
     objects.forEach((object) => {
         possibleObjectsAttribute.forEach((potentialObjectProperty) => {
-            if (typeof(object[potentialObjectsAttributes.property]) === 'object'){
+            if (typeof (object[potentialObjectsAttributes.property]) === 'object') {
                 if (!_objectsPerClass[potentialObjectsAttributes.model]) {
                     _objectsPerClass[potentialObjectsAttributes.model] = [];
                     // nestedObjects[potentialObjectsAttributes.model] = [];
