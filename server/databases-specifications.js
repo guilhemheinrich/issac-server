@@ -36,7 +36,7 @@ var writePipeline = (model, objects) => {
     Object.keys(databasesXattributes).forEach((db_name) => {
         _dispatcher(_databases[db_name])
         .insertRequest(objects, model, databasesXattributes[db_name], nested_objects);
-    })
+    });
     return nested_objects;
 }
 

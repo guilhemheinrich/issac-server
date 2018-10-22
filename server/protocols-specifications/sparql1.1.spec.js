@@ -142,6 +142,8 @@ var insertRequest = (validObjects, model, restricted_attributes, nested_objects)
         .forEach((object) => {
             _morphQuads(model, object, quads, prefixes, nested_objects);
         });
+
+
     // Cannot be put upper because '=' instanciate a new array
     prefixes = prefixes.filter(unique);
     prefixesObject = {};
@@ -173,25 +175,9 @@ var insertRequest = (validObjects, model, restricted_attributes, nested_objects)
     console.log(
         generator.stringify(addQuery)
         );
-    return nested_objects;
+    return generator.stringify(addQuery);
 }
 module.exports = {
     insertRequest: insertRequest
-
 }
 
-// var parsedQuery = parser.parse(`
-// PREFIX issac: <http://issac/> 
-// INSERT DATA {  
-//     GRAPH <http://ECPP_administration/agent/set/> {   
-//     <issac:01354dsz> <rdfs:label> "Test 2"^^<xsd:string>.
-//     <issac:01354dsz> <rdfs:label> "Test 2"^^<xsd:string>.
-//     <issac:01354dsz> <issac:involve> <http://hello>.
-//     <issac:01354dsz> <issac:hasOwner> <http://Bob>.
-//     }
-//     GRAPH <http://ECPP_administration/agent/set/> {
-//     <http://Bob> <rdf:type> <foaf:Person>.
-//     <http://Bob> <foaf:firstName> "Bob"^^<xsd:string>.
-//     <http://Bob> <foaf:mbox> "bob@gmail.com"^^<xsd:string>.
-//     }
-// }`)

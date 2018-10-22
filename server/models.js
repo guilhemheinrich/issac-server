@@ -30,6 +30,8 @@ var _schemasXclass = () => {
 var models = _models();
 var schemasXclass = _schemasXclass();
 
+// var _checkReference
+
 var _potentialObjectsAttributes = (model) => {
     possibleObjectsAttribute = [];
     Object.keys(models[model]).forEach((attributeName) => {
@@ -54,7 +56,6 @@ var _potentialObjectsAttributes = (model) => {
             items = attribute.items
             if (items.anyOf) {
                 items.anyOf.forEach((item) => {
-
                     if (item['$ref']) {
                         potential = {
                             property: attributeName,
@@ -76,15 +77,21 @@ var _potentialObjectsAttributes = (model) => {
     return possibleObjectsAttribute;
 }
 
-var splitInstances = (model, objects) => {
-    // _model = model;
-    // _objects = objects;
+
+var _checkObjectAndInsert = (model, object, container) => {
+    if (typeof (object) === 'object') {
+        if (!container[model]) {
+            container[model] = [];
+        }
+        container[model].push(object)
+    }
+}
+
+var denestify = (model, objects) => {
     _inObjects = { [model]: objects }
     objectsPerClass = { ..._inObjects }
-    // objectsPerClass = {};
     do {
         nestedObjects = {};
-        // nestedObjects = {};
         Object.keys(_inObjects).forEach((modelName) => {
             _objects = _inObjects[modelName];
             potentialObjectsAttribute = _potentialObjectsAttributes(modelName);
@@ -92,20 +99,10 @@ var splitInstances = (model, objects) => {
                 possibleObjectsAttribute.forEach((potentialObjectProperty) => {
                     if (Array.isArray(object[potentialObjectProperty.property])) {
                         object[potentialObjectProperty.property].forEach((item) => {
-                            if (typeof (item) === 'object') {
-                                if (!objectsPerClass[potentialObjectProperty.model]) {
-                                    nestedObjects[potentialObjectProperty.model] = [];
-                                }
-                                nestedObjects[potentialObjectProperty.model].push(item)
-                            }
+                            _checkObjectAndInsert(potentialObjectProperty.model, item, nestedObjects);
                         })
                     } else {
-                        if (typeof (object[potentialObjectProperty.property]) === 'object') {
-                            if (!objectsPerClass[potentialObjectProperty.model]) {
-                                nestedObjects[potentialObjectProperty.model] = [];
-                            }
-                            nestedObjects[potentialObjectProperty.model].push(object[[potentialObjectProperty.property]])
-                        }
+                        _checkObjectAndInsert(potentialObjectProperty.model, object[potentialObjectProperty.property], nestedObjects);
                     }
                 })
             })
@@ -126,25 +123,7 @@ var splitInstances = (model, objects) => {
     return objectsPerClass;
 }
 
-var _splitInstances = (model, objects, _objectsPerClass) => {
-    potentialObjectsAttribute = _potentialObjectsAttributes(model);
-    objects.forEach((object) => {
-        possibleObjectsAttribute.forEach((potentialObjectProperty) => {
-            if (typeof (object[potentialObjectsAttributes.property]) === 'object') {
-                if (!_objectsPerClass[potentialObjectsAttributes.model]) {
-                    _objectsPerClass[potentialObjectsAttributes.model] = [];
-                    // nestedObjects[potentialObjectsAttributes.model] = [];
-                }
-                _objectsPerClass[potentialObjectsAttributes.model].push(object[[potentialObjectsAttributes.property]])
-                // nestedObjects[potentialObjectsAttributes.model].push(object[[potentialObjectsAttributes.property]])
-            }
-        })
-    })
-}
-
-
-// module.exports = models;
 module.exports = {
     models: models,
-    denestify: splitInstances
+    denestify: denestify
 }

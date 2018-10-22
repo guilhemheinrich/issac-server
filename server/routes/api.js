@@ -20,15 +20,6 @@ router.get('/neo', (req, res) => {
 });
 
 /* ADD or SET one element
-Pattern as json is :
-{
-    type: ModelName,
-    data: {
-        ... attribute: value
-        ... relationShip: Pattern
-    }
-}
-
 */
 router.post('/POST', (req, res) => {
     objects = req.body;
@@ -57,13 +48,6 @@ router.post('/POST/:objectID', function (req, res) {
         .forEach((model) => {
             databasesFunctions.writePipeline(model, modelXobjects[model]);
         });
-    // modelXobjects = [{model: model, objects: validObjects}];
-    // while (objects.length > 0) {
-    //     model = modelXobjects[0].model;
-    //     objects = modelXobjects[0].objects;
-    //     databasesFunctions.writePipeline(model, objects);
-    // }
-    // console.log(allObjects);
     res.send(req.params)
 })
 
