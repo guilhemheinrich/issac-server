@@ -1,0 +1,23 @@
+$schema: 'http://json-schema.org/draft-07/schema#'
+$id: 'http://issac/context'
+title: Context
+description: 'A context'
+type: object
+properties:
+  uri:
+    type: string
+    format: uri
+  location:
+    description: 'Named Geographic Area (s)'
+    anyOf:
+      - {$ref: 'http://issac/skos-node'}
+      - {type: string, format: uri}
+  primaryPlant:
+    description: 'The primary plant'
+    anyOf:
+      - {$ref: 'http://issac/skos-node'}
+      - {type: string, format: uri}
+required:
+  - uri
+  - location
+  - primaryPlant

@@ -9,7 +9,15 @@ require("fs").readdirSync(rootDir).forEach(function (file) {
     schemas.push(schema);
 
 });
-var ajv = new Ajv({ schemas: schemas }); // options can be passed, e.g. {allErrors: true}
+var ajv = new Ajv({
+    // See reference : <https://github.com/epoberezkin/ajv#options> 
+    schemas: schemas,
+    verbose: true, 
+    allErrors: true,
+    coerceTypes: "array" /* For ex., will validate a single string if and array string is awaited
+                            WARNING: this will change the initial data to match the schema
+                            In the previous ex {uri: "http://uri"} would become  {uri: ["http://uri"]}*/
+}); 
 modelXvalidation = require('../configuration/routesXschemas.json')
 
 var ajvCheck = (model, objects) => {
@@ -23,7 +31,8 @@ var ajvCheck = (model, objects) => {
         var valid = validate(object);
         if (!valid) 
         {
-            console.log(validate.errors);
+            console.log(object);
+            console.log(ajv.errorsText(validate.errors));
         } else {
             validObjects.push(object);
         }

@@ -1,0 +1,16 @@
+{
+    "name": "Processus",
+    "uri": "http://concept/processus",
+    "description": "A processus is a phenomenon responisble of actions.",
+    "attributes": [
+        {"key": "uri", "type": "string", "format": "uri"},
+        {"key": "name", "type": "string"},
+        {"key": "description", "type": "string"}
+    ],
+    "relationship": [
+
+    ],
+    "required": [
+        "name", "uri"
+    ]
+}

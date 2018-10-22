@@ -1,7 +1,7 @@
 {
     
     "mappings" : {
-
+        "ConceptInstance": "http://issac/conceptInstance",
         "Processus": "http://issac/processus",
         "Context": "http://issac/context",
         "Agent": "http://administration/agent",

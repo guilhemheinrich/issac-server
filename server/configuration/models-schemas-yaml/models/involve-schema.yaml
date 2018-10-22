@@ -1,0 +1,20 @@
+name: involve
+uri: 'http://relationship/involve'
+attributes:
+  -
+    key: uri
+    type: string
+    format: uri
+  -
+    key: name
+    type: string
+  -
+    key: description
+    type: string
+subjects:
+  - http://concept/processus
+objects:
+  - http://concept/agent
+required:
+  - name
+  - uri

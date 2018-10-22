@@ -1,0 +1,15 @@
+{
+    "name": "isPart",
+    "uri": "http://relationship/isPart",
+    "attributes": [
+        {"key": "uri", "type": "string", "format": "uri"},
+        {"key": "name", "type": "string"},
+        {"key": "description", "type": "string"}
+    ],
+    "relationship": [
+
+    ],
+    "required": [
+        "name", "uri"
+    ]
+}

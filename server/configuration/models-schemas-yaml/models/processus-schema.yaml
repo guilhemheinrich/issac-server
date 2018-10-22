@@ -1,0 +1,21 @@
+name: Processus
+uri: 'http://concept/processus'
+description: |
+  A processus is a phenomenon responsable of actions
+  It is the glue which make a subset of agent evolved dynamically 
+attributes:
+  -
+    key: uri
+    type: string
+    format: uri
+  -
+    key: name
+    type: string
+  -
+    key: description
+    type: string
+relationships: 
+  - 'http://relationship/involve'
+required:
+  - name
+  - uri

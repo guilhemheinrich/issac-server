@@ -23,11 +23,16 @@ router.get('/neo', (req, res) => {
 */
 router.post('/POST', (req, res) => {
     objects = req.body;
-    let validObjects = modelValidator(...objects);
+    model = "ConceptInstance"
+    let validObjects;
+    if (Array.isArray(objects)) {
+        validObjects = modelValidator(model, objects);
+    } else {
+        validObjects = modelValidator(model, [objects]);
+    }
+    // quads = sparqlHandler.insert(validObjects);
 
-    quads = sparqlHandler.insert(validObjects);
-
-    res.send(quads);
+    res.send(validObjects);
 });
 
 

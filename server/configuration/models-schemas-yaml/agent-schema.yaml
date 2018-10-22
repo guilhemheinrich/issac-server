@@ -1,0 +1,21 @@
+$schema: 'http://json-schema.org/draft-07/schema#'
+$id: 'http://administration/agent'
+title: Agent
+description: 'An agent of the system'
+type: object
+properties:
+  uri:
+    description: 'The unique identifier for an Agent'
+    type: string
+    format: uri
+  first_name:
+    description: 'First name of the agent'
+    type: string
+  last_name:
+    type: string
+  email:
+    type: string
+    format: email
+required:
+  - uri
+  - email

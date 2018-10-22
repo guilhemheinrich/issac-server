@@ -1,34 +1,25 @@
 {
     "$schema": "http://json-schema.org/draft-07/schema#",
-    "$id": "http://issac/relationshipInstance",
-    "title": "RelationshipInstance",
-    "description": "Entity representing an instance of a relationship",
+    "$id": "http://issac/relationship",
+    "title": "Relationship",
+    "description": "Entity representing a relationship",
     "type": "object",
     "properties": {
-        "classes": {
-            "description": "Classes (types, labels) of the relationship",
-            "type": "array",
-            "items": {
-                "anyOf": [
-                    {
-                        "$ref": "http://issac/relationship"
-                    },
-                    {
-                        "type": "string",
-                        "format": "uri"
-                    }
-                ]
-            },
-            "uniqueItems": true,
-            "minItems": 1
+        "name": {
+            "description": "Name of the relationship",
+            "type": "string"
+        },
+        "description": {
+            "description": "Description of the relationship",
+            "type": "string"
         },
         "subjects": {
-            "description": "Subject(s) (left-part) of the relationship",
+            "description": "Concepts subject(s) (left-part) of the relationship",
             "type": "array",
             "items": {
                 "anyOf": [
                     {
-                        "$ref": "http://issac/conceptInstance"
+                        "$ref": "http://issac/concept"
                     },
                     {
                         "type": "string",
@@ -40,12 +31,12 @@
             "uniqueItems": true
         },
         "objects": {
-            "description": "Object(s) (right-part) of the relationship",
+            "description": "Concepts object(s) (right-part) of the relationship",
             "type": "array",
             "items": {
                 "anyOf": [
                     {
-                        "$ref": "http://issac/conceptInstance"
+                        "$ref": "http://issac/concept"
                     },
                     {
                         "type": "string",
@@ -65,12 +56,13 @@
             "description": "Attributes value of the relationship",
             "type": "array",
             "items": {
-                "$ref": "http://issac/attributeInstance"
+                "$ref": "http://issac/attribute"
             }
         }
     },
     "required": [
-        "classes",
+        "name",
+        "subjects",
         "objects",
         "uri"
     ]

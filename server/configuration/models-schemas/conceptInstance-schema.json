@@ -27,15 +27,15 @@
             "type": "string",
             "format": "uri"
         },
-        "attributes": {
-            "description": "Attributes of the object",
+        "attributesValues": {
+            "description": "Attributes value of the object",
             "type": "array",
             "items": {
                 "$ref": "http://issac/attributeInstance"
             }
         },
-        "relationships": {
-            "description": "Relationship of the object",
+        "relationshipsValues": {
+            "description": "Relationship instance of the object",
             "type": "array",
             "items": {
                 "$ref": "http://issac/relationshipInstance"

@@ -1,0 +1,47 @@
+{
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "$id": "http://issac/concept",
+    "title": "Concept",
+    "description": "Entity representing a concept",
+    "type": "object",
+    "properties": {
+        "name": {
+            "description": "Name of the concept",
+            "type": "string"
+        },
+        "uri": {
+            "description": "The unique identifier for the concept",
+            "type": "string",
+            "format": "uri"
+        },
+        "description": {
+            "description": "Description of the concept",
+            "type": "string"
+        },
+        "attributes": {
+            "description": "Attributes value of the concept",
+            "type": "array",
+            "items": {
+                "$ref": "http://issac/attribute"
+            }
+        },
+        "relationships": {
+            "description": "Relationship instance of the concept",
+            "type": "array",
+            "items": {
+                "$ref": "http://issac/relationship"
+            }
+        },
+        "required": {
+            "description": "Required field of the concept",
+            "type": "array",
+            "items": {
+                "type": "string"
+            }
+        }
+    },
+    "required": [
+        "name",
+        "uri"
+    ]
+}
