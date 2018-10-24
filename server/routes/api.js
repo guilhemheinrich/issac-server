@@ -59,6 +59,7 @@ router.post('/POST/:objectID', function (req, res) {
 router.get('/', (req, res) => {
     // databases = require('../configuration/databases');
     concepts = require('../configuration/models').concepts
+    relationships = require('../configuration/models').relationships
     res.send('api works');
 });
 

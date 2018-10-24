@@ -47,8 +47,31 @@ _concepts.forEach((concept) => {
         concepts.push(concept);
     }
 })
-// Check 
+
+/////////////////////////////////////////////////////////////////////
+///////////////////// Relationship //////////////////////////////////
+/////////////////////////////////////////////////////////////////////
+var _relationships = require(_localPath + '../common/load_many')(_localPath + './models/relationships');
+
+var _schemasDict = {};
+_schemas.forEach(( function (schema) {
+    _schemasDict[schema['title']] = schema;
+}));
+var relationships = [];
+_relationships.forEach((relationship) => {
+
+    let validate = ajv.getSchema(_schemasDict['Relationship']['$id']);
+    var valid = validate(relationship);
+    if (!valid) {
+        console.log(relationship);
+        console.log(ajv.errorsText(validate.errors));
+    } else {
+        relationships.push(relationship);
+    }
+})
+
 module.exports = {
-    concepts: concepts
+    concepts: concepts,
+    relationships: relationships
 };
 
