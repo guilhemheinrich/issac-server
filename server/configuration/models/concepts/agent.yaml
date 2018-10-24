@@ -3,16 +3,20 @@ uri: 'http://administration/agent'
 description: |
   An agent is a moral entity (see foaf:Agent), which can log in, and owns a Processus 
 attributes:
-  uri:
+  -
+    key: uri
     description: 'The unique identifier for an Agent'
     type: string
     format: uri
-  first_name:
+  -
+    key: first_name
     description: 'First name of the agent'
     type: string
-  last_name:
+  -
+    key: last_name
     type: string
-  email:
+  -
+    key: email
     type: string
     format: email
 required:
@@ -22,7 +26,6 @@ required:
 protocols:
   sparql1.1:
     namedGraph: context_administration
-    attributes:
 
 
 databases:

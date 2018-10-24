@@ -1,5 +1,5 @@
 /* Local dependencies (pathes)
-    schemas builder: '../common/schemas',
+    schemas loader: '../common/load_many',
     database schema: './models-schemas-yaml/generics-schemas/database.yaml'
     databases files: './databases.json'
     confi loader : '../common/conf_load'
@@ -8,7 +8,7 @@
 _localPath = __dirname + '/'
 
 var Ajv = require('ajv');
-var dbs_schema = require(_localPath + '../common/schemas')(_localPath + './models-schemas-yaml/generics-schemas/database.yaml');
+var dbs_schema = require(_localPath + '../common/load_many')(_localPath + './models-schemas-yaml/generics-schemas/database-schema.yaml');
 
 var ajv = new Ajv({
     // See reference : <https://github.com/epoberezkin/ajv#options> 

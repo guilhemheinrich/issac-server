@@ -1,16 +1,19 @@
 name: involve
 uri: 'http://relationship/involve'
 attributes:
-  uri:
+  - 
+    key: uri
     type: string
     format: uri
     description: |
       Uniform identifier of the relationship
-  name:
+  -
+    key: name
     type: string
     description: |
       Name of the relationship
-  description:
+  -
+    key: description
     type: string
     description: |
       Desciption of the processus

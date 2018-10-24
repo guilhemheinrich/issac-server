@@ -4,16 +4,19 @@ description: |
   A processus is a phenomenon responsable of actions
   It is the glue which make a subset of agent evolved dynamically 
 attributes:
-  uri:
+  - 
+    key: uri
     type: string
     format: uri
     description: |
       Uniform identifier of the processus
-  name:
+  -
+    key: name
     type: string
     description: |
       Name of the processus
-  description:
+  -
+    key: description
     type: string
     description: |
       Desciption of the processus

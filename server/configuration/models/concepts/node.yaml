@@ -3,16 +3,19 @@ uri: 'http://concept/node'
 description: |
   A node describe a node in a thesaurus tree, or any hierarchical structure of knowledge
 attributes:
-  uri:
+  - 
+    key: uri
     type: string
     format: uri
     description: |
       Uniform identifier of the node
-  label:
+  - 
+    key: label
     type: string
     description: |
       Favorite name of the node
-  synonyms:
+  - 
+    key: synonyms
     type: array
     items: {type: string}
     description: |
