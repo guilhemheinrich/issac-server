@@ -1,0 +1,33 @@
+$schema: 'http://json-schema.org/draft-07/schema#'
+$id: 'http://SI/database'
+title: Database
+description: |
+  A database, or service, that the server could send data to
+  
+type: object
+properties:
+  name:
+    description: 'Name of the database'
+    type: string
+  requestProctocol:
+    description: >
+      The natural langage for the communication between the server and 
+      the service
+    type: string
+  accessPoint:
+    description: 'Location of the destination service'
+    type: string
+  permissions:
+    description: >
+      Permissions granted to the endpoint
+      May be read/write POST/GET, etc..
+    type: array
+    items:
+      {type: string}
+  authentification:
+    description: Authentification informations, if relevant
+    type: object
+required:
+  - name
+  - accesspoint
+  - requestProtocol

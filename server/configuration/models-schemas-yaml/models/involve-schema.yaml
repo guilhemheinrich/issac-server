@@ -1,16 +1,19 @@
 name: involve
 uri: 'http://relationship/involve'
 attributes:
-  -
-    key: uri
+  uri:
     type: string
     format: uri
-  -
-    key: name
+    description: |
+      Uniform identifier of the relationship
+  name:
     type: string
-  -
-    key: description
+    description: |
+      Name of the relationship
+  description:
     type: string
+    description: |
+      Desciption of the processus
 subjects:
   - http://concept/processus
 objects:
@@ -18,3 +21,14 @@ objects:
 required:
   - name
   - uri
+
+databases:
+-
+  name: virtuoso
+  specifications:
+    namedGraph: context_processus_added
+    permissions: [read, write]
+-
+  name: neo4j
+    specifications: 
+      permissions: write

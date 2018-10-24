@@ -1,0 +1,36 @@
+name: Agent
+uri: 'http://administration/agent'
+description: |
+  An agent is a moral entity (see foaf:Agent), which can log in, and owns a Processus 
+attributes:
+  uri:
+    description: 'The unique identifier for an Agent'
+    type: string
+    format: uri
+  first_name:
+    description: 'First name of the agent'
+    type: string
+  last_name:
+    type: string
+  email:
+    type: string
+    format: email
+required:
+  - uri
+  - email
+
+protocols:
+  sparql1.1:
+    namedGraph: context_administration
+    attributes:
+
+
+databases:
+  -
+    name: virtuoso
+    specifications:
+      permissions: [read, write]
+  -
+    name: neo4j
+    specifications: 
+      permissions: write

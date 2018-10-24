@@ -4,18 +4,47 @@ description: |
   A processus is a phenomenon responsable of actions
   It is the glue which make a subset of agent evolved dynamically 
 attributes:
-  -
-    key: uri
+  uri:
     type: string
     format: uri
-  -
-    key: name
+    description: |
+      Uniform identifier of the processus
+  name:
     type: string
-  -
-    key: description
+    description: |
+      Name of the processus
+  description:
     type: string
+    description: |
+      Desciption of the processus
 relationships: 
   - 'http://relationship/involve'
 required:
   - name
   - uri
+
+
+# Protocols related information
+protocols:
+  sparql1.1: 
+      namedGraph: context_processus_added
+      Pkey: uri
+      namespaces: [issac, rdfs, skos]
+      attributes:
+        uri: {object: issac:Processus}
+        name: {predicate: rdfs:label}
+        description: {predicate: skos:definition}
+        agents: {predicate: issac:involve}
+        owners: {predicate: issac:hasOwner}
+        context: {predicate: issac:hasContext}
+
+
+# Databases related information
+databases:
+  -
+    name: virtuoso
+    permissions: [read, write]
+
+  -
+    name: neo4j
+    permissions: write

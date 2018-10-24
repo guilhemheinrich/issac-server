@@ -1,0 +1,11 @@
+$schema: 'http://json-schema.org/draft-07/schema#'
+$id: 'http://SI/protocol'
+title: Protocol
+description: |
+  A protocol describes here any operation that the server will output, 
+  such has writing in a database or "passing" data
+  Such a configuration file, along with specific functionals files,
+  specifies the defaults
+  
+type: object
+properties:

@@ -57,6 +57,7 @@ router.post('/POST/:objectID', function (req, res) {
 })
 
 router.get('/', (req, res) => {
+    databases = require('../configuration/databases');
     res.send('api works');
 });
 

@@ -1,0 +1,44 @@
+name: Node
+uri: 'http://concept/node'
+description: |
+  A node describe a node in a thesaurus tree, or any hierarchical structure of knowledge
+attributes:
+  uri:
+    type: string
+    format: uri
+    description: |
+      Uniform identifier of the node
+  label:
+    type: string
+    description: |
+      Favorite name of the node
+  synonyms:
+    type: array
+    items: {type: string}
+    description: |
+      Alternative(s) name(s) of the node
+relationships: 
+  - 'http://relationship/involve'
+required:
+  - name
+  - uri
+
+protocols:
+  sparql1.1:
+      Pkey: uri
+      namespaces: skos
+      attributes:
+        uri: {object: skos:Concept}
+        label: {predicate: skos:prefLabel}
+        synonyms: {predicate: skos:altLabel}
+
+
+databases:
+  -
+    name: virtuoso
+    permissions: [read]
+
+
+  -
+    name: neo4j
+    permissions: write
