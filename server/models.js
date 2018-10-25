@@ -108,7 +108,7 @@ var denestify = (model, objects) => {
             })
         })
         // objectsPerClass = { ...objectsPerClass, ...nestedObjects };
-        // Safey merge
+        // Safety merge
         Object.getOwnPropertyNames(nestedObjects)
             .forEach((propertyName) => {
                 if (!objectsPerClass[propertyName]) {

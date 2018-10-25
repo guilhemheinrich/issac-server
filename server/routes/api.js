@@ -56,11 +56,21 @@ router.post('/POST/:objectID', function (req, res) {
     res.send(req.params)
 })
 
-router.get('/', (req, res) => {
-    // databases = require('../configuration/databases');
-    concepts = require('../configuration/models').concepts
-    relationships = require('../configuration/models').relationships
-    res.send('api works');
+router.get('/test/database', (req, res) => {
+    databases = require('../configuration/databases');
+    res.send(databases);
+});
+
+router.get('/test/models', (req, res) => {
+    models = require('../configuration/models')
+    concepts = models.concepts
+    relationships = models.relationships
+    res.send(models);
+});
+
+router.get('/test/generate', (req, res) => {
+    generated = require('../configuration/generate')();
+    res.send(generated);
 });
 
 
