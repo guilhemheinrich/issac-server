@@ -45,9 +45,24 @@ var _specificator = (general, specific, out = {}, ...path) => {
     })
 }
 
+
+var rollingHeredity = (...objects) => {
+    switch (objects.length) {
+        case 0:
+        return;
+        case 1:
+        return objects[0];
+        case 2:
+        return specificator(objects[0], objects[1]);
+        default:
+        let general = objects.shift();
+        return specificator(general, rollingHeredity(...objects));
+    }
+}
 module.exports = specificator;
 
 var general = { a: 2, b: 3, d: { a: 4, c: 5 } }
 var specific = { a: 4, d: { c: 'specific !' } }
-
+var specificer = {a:'superspecific', d: {a: 'unbelievable'}}
 specificator(general, specific)
+rollingHeredity(general, specific, specificer)
