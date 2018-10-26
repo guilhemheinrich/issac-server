@@ -59,10 +59,25 @@ var rollingHeredity = (...objects) => {
         return specificator(general, rollingHeredity(...objects));
     }
 }
+
+
+var forkedHeredity = (array, ...objects) => {
+    let common = rollingHeredity(...objects);
+    return array.map((item) => {
+        return specificator(common, item);
+    }) 
+}
 module.exports = specificator;
 
 var general = { a: 2, b: 3, d: { a: 4, c: 5 } }
 var specific = { a: 4, d: { c: 'specific !' } }
 var specificer = {a:'superspecific', d: {a: 'unbelievable'}}
+var arrayOfItem = [
+    {a: 3},
+    {haha: 'lol'},
+    {d:{ a: 'finally not'}}
+]
+
 specificator(general, specific)
 rollingHeredity(general, specific, specificer)
+forkedHeredity(arrayOfItem, general, specific, specificer)
